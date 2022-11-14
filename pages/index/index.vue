@@ -1,38 +1,11 @@
 <template>
 	<view class="page">
-		<view class="header">
-			<image class="logo" :src="appLogo" mode=""></image>
-			<view>
-				<view>
-					{{appName}}
-				</view>
-				<view>
-					{{appDes}}
-				</view>
-			</view>
-		</view>
-		<view class="bg"></view>
-		<view class="content">
-			<image src="../../static/content.png" mode=""></image>
-		</view>
 		<view class="btns">
-			<view @click="down('and')">
-				<view class="icon">
-					<image src="../../static/and.png" mode=""></image>
-				</view>
-				<view class="text">
-					<view>Andriod版</view>
-					<view>免费下载</view>
-				</view>
+			<view @click="down('and')" class="btn">
+				<image src="https://img.agrimedia.cn/bmsc/apps/andriod.png" mode=""></image>
 			</view>
-			<view @click="down('ios')">
-				<view class="icon">
-					<image src="../../static/ios.png" mode=""></image>
-				</view>
-				<view class="text">
-					<view>ios版</view>
-					<view>免费下载</view>
-				</view>
+			<view @click="down('ios')" class="btn">
+				<image src="https://img.agrimedia.cn/bmsc/apps/ios.png" mode=""></image>
 			</view>
 		</view>
 		<view class="wx" v-if="weixin">
@@ -101,7 +74,8 @@
 		width: 100vw;
 		height: 100vh;
 		overflow: hidden;
-
+		background-image: url(https://img.agrimedia.cn/bmsc/apps/main-bg.png);
+		background-size: 100%;
 		.header {
 			width: 100vw;
 			height: 350upx;
@@ -159,22 +133,24 @@
 			transform: translateY(-54%);
 			overflow: hidden;
 
-			image {
+			img {
 				width: 750upx;
 				height: 750upx;
 			}
 		}
-
+		
+		.btn {
+			height: 60rpx;
+		}
 		.btns {
 			width: 100vw;
-			height: 300upx;
 			position: absolute;
-			bottom: 3%;
+			bottom: 10%;
 			left: 0;
 
 			>view {
-				width: 380upx;
-				height: 120upx;
+				width: 600rpx;
+				height: 110rpx;
 				background-color: @BgColor;
 				color: #FFFFFF;
 				display: flex;
@@ -184,31 +160,9 @@
 				box-shadow: 0 10upx 24upx -10upx @BgColor;
 				;
 
-				.icon {
-					width: 120upx;
-					height: 120upx;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-				}
-
-				.text {
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-
-					view:nth-child(1) {
-						font-size: 34upx;
-					}
-
-					view:nth-child(2) {
-						font-size: 28upx;
-					}
-				}
-
 				image {
-					width: 50upx;
-					height: 50upx;
+					width: 100%;
+					height: auto;
 				}
 			}
 
