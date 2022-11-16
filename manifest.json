@@ -84,7 +84,7 @@
             "https" : false
         },
         "router" : {
-            "base" : "/appDownload/"
+            "base" : ""
         },
         "title" : "",
         "template" : "",

@@ -8,9 +8,8 @@
 				<image src="https://img.agrimedia.cn/bmsc/apps/ios.png" mode=""></image>
 			</view>
 		</view>
-		<view class="wx" v-if="weixin">
-
-		</view>
+		<!-- 提示去浏览器打开 -->
+		<view class="wx" v-if="weixin"></view>
 	</view>
 </template>
 
@@ -21,8 +20,7 @@
 				appLogo: 'https://img.agrimedia.cn/bmsc/apps/bm-app-logo.jpeg', //app logo图片路径
 				appName: '白马星球', //app名称
 				appDes: '白马星球下载页', //app简述
-				andHref: 'apk', //安卓app下载地址
-				iosHref: 'https://itunes.apple.com/cn/app/hello-uni-app/id1417078253?mt=8', //苹果appStore链接
+				andHref: 'http://123.57.95.84/bmsc/__UNI__7A84315_1115200440.apk', //安卓app下载地址
 				weixin: false, //是否为微信内浏览器打开
 				scheme: '' //scheme地址 如果已安装app直接打开，置空则不执行
 			}
@@ -30,10 +28,25 @@
 		onLoad() {
 			// 动态设置页面标题
 			this.setTitle()
-			// 判断该页面是否为微信内置浏览器内打开 true>显示浏览器内打开引导
-			this.isWX()
+			
 			// 如果需要通过scheme直接打开app
 			this.openApp()
+			
+			// 设备类型
+			this.deviceType = uni.getSystemInfoSync().platform;
+			
+		},
+		mounted() {
+			// 如果是安卓
+			if (uni.getSystemInfoSync().platform == 'android') {
+				// 判断是否微信登陆
+				var ua = window.navigator.userAgent.toLowerCase();
+				if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			        return; // 微信中打开
+			    } else {
+					window.open(this.andHref);
+				}
+			}
 			
 		},
 		methods: {
@@ -56,11 +69,23 @@
 				}
 			},
 			down(type) {
+				// 选择安卓
 				if (type == 'and') {
-					window.location.href = this.andHref;
+					if (this.deviceType == 'android') {
+						// 判断该页面是否为微信内置浏览器内打开 true>显示浏览器内打开引导, 因为微信浏览器不支持下载apk文件
+						this.isWX();
+						// 如果被拦截下载,点击再次下载包
+						if (!this.weixin) {
+							window.open(this.andHref);
+						}
+					}
+				// 选择ios, 直接打开分发下载页
 				} else {
-					window.open(this.iosHref);
+					if (this.deviceType == 'ios') {
+						window.location.href = 'https://game.aiablue.cc/iosign/softwareDistribute/down/dd3978137c3e4119b30ac02c0e4b5bed';  // 分发下载页
+					}
 				}
+				
 			}
 		}
 	}
@@ -115,7 +140,6 @@
 		.bg {
 			width: 100vw;
 			height: 210upx;
-			background-image: url(../../static/bg.png);
 			background-size: 100%;
 			background-position: center bottom;
 			background-repeat: no-repeat;
