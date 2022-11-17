@@ -20,7 +20,7 @@
 				appLogo: 'https://img.agrimedia.cn/bmsc/apps/bm-app-logo.jpeg', //app logo图片路径
 				appName: '白马星球', //app名称
 				appDes: '白马星球下载页', //app简述
-				andHref: 'http://123.57.95.84/bmsc/__UNI__7A84315_1115200440.apk', //安卓app下载地址
+				andHref: 'https://img.agrimedia.cn/bmsc/apps/__UNI__7A84315_1115200440.apk', //安卓app下载地址
 				weixin: false, //是否为微信内浏览器打开
 				scheme: '' //scheme地址 如果已安装app直接打开，置空则不执行
 			}
