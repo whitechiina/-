@@ -20,7 +20,7 @@
 				appLogo: 'https://img.agrimedia.cn/bmsc/apps/bm-app-logo.jpeg', //app logo图片路径
 				appName: '白马星球', //app名称
 				appDes: '白马星球下载页', //app简述
-				andHref: 'https://img.agrimedia.cn/bmsc/apps/__UNI__7A84315_1115200440.apk', //安卓app下载地址
+				andHref: 'https://img.agrimedia.cn/bmsc/apps/bmsc_v1.0.0.apk', //安卓app下载地址
 				weixin: false, //是否为微信内浏览器打开
 				scheme: '' //scheme地址 如果已安装app直接打开，置空则不执行
 			}
@@ -82,10 +82,9 @@
 				// 选择ios, 直接打开分发下载页
 				} else {
 					if (this.deviceType == 'ios') {
-						window.location.href = 'https://game.aiablue.cc/iosign/softwareDistribute/down/dd3978137c3e4119b30ac02c0e4b5bed';  // 分发下载页
+						window.location.href = 'https://game.aiaxig.cc/iosign/softwareDistribute/down/b2ec0e433e2741d1a82f8337077d00f5';  // 分发下载页
 					}
 				}
-				
 			}
 		}
 	}
