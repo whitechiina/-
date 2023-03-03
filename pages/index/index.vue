@@ -9,23 +9,31 @@
 			</view>
 		</view>
 		<!-- 提示去浏览器打开 -->
+		<view class="version">
+			<text class="versions">v{{version}}</text>
+		</view>
 		<view class="wx" v-if="weixin"></view>
 	</view>
 </template>
 
 <script>
+	import { getIosUrl } from "@/config/api.js";
 	export default {
 		data() {
 			return {
 				appLogo: 'https://img.agrimedia.cn/bmsc/apps/bm-app-logo.jpeg', //app logo图片路径
 				appName: '白马星球', //app名称
 				appDes: '白马星球下载页', //app简述
-				andHref: 'https://img.agrimedia.cn/bmsc/apps/bmsc_v1.0.0.apk', //安卓app下载地址
+				andHref: '', //安卓app下载地址
+				iosHref: '', // IOS下载地址
+				version: '',
 				weixin: false, //是否为微信内浏览器打开
 				scheme: '' //scheme地址 如果已安装app直接打开，置空则不执行
 			}
 		},
 		onLoad() {
+			this.getData()
+			
 			// 动态设置页面标题
 			this.setTitle()
 			
@@ -34,7 +42,6 @@
 			
 			// 设备类型
 			this.deviceType = uni.getSystemInfoSync().platform;
-			
 		},
 		mounted() {
 			// 如果是安卓
@@ -46,10 +53,25 @@
 			    } else {
 					window.open(this.andHref);
 				}
+			} else {
+				// this.getData();  // 获取IOS地址
 			}
 			
 		},
 		methods: {
+			async getData () {
+				try {
+					const res = await getIosUrl();
+					this.version = res.data.version;this.version = res.data.version;
+					this.andHref = res.data.ydy_android_link;
+					this.iosHref = res.data.ydy_ios_link;
+				} catch (err) {
+					uni.showToast({
+						title: err,
+						icon: 'none'
+					});
+				}
+			},
 			setTitle() {
 				uni.setNavigationBarTitle({
 					title: this.appName + '下载'
@@ -82,7 +104,7 @@
 				// 选择ios, 直接打开分发下载页
 				} else {
 					if (this.deviceType == 'ios') {
-						window.location.href = 'https://game.aiaxig.cc/iosign/softwareDistribute/down/b2ec0e433e2741d1a82f8337077d00f5';  // 分发下载页
+						window.location.href = this.iosHref;  // 分发下载页
 					}
 				}
 			}
@@ -92,7 +114,19 @@
 
 <style lang="less">
 	@BgColor: #262633; //主题背景色
-
+	.version {
+		width: 100%;
+		text-align: center;
+		opacity: .5;
+		text-align: center;
+		color: #fff;
+		position: fixed;
+		bottom: 10rpx;
+		font-size: 2rpx;
+	}
+	.versions {
+		margin: 0rpx 10rpx;
+	}
 	.page {
 		background-color: #f8f8f8;
 		width: 100vw;

@@ -80,17 +80,30 @@
         "enable" : false
     },
     "h5" : {
-        "devServer" : {
-            "https" : false
+        "async" : {
+            "delay" : "10000" // 这个时间内页面js已经加载了，所以不展示默认的loading  
         },
         "router" : {
+            "mode" : "history",
             "base" : ""
         },
-        "title" : "",
-        "template" : "",
-        "uniStatistics" : {
-            "enable" : true
+        "devServer" : {
+            "disableHostCheck" : true, // 开启可以用自己的域名
+            "proxy" : {
+                "/api" : {
+                    "target" : "http://103.39.230.169:8085", // 测试服务器2
+                    "changeOrigin" : true,
+                    "secure" : false
+                }
+            },
+            "https" : false
         },
-        "domain" : "static-88d94197-0a4b-4a85-b45d-dffd3b0bd5b4.bspapp.com"
+        "title" : "白马星球APP下载页",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : false
+            }
+        },
+        "template" : "template.h5.html"
     }
 }
