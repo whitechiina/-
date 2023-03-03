@@ -1,4 +1,4 @@
-export const baseURL = 'http://103.39.230.169:8085'
+export const baseURL = 'http://bmsc.baimajingxuan.com:8080'
 
 export const request = (options) => {
 	return new Promise((resolve, reject) => {
