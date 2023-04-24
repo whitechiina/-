@@ -84,9 +84,6 @@
 					this.weixin = true
 				} else {
 					this.weixin = false
-					if (this.deviceType == 'ios') {
-						window.location.href = 'https://img.agrimedia.cn/bmsc/apps/bmsc_ios.mobileconfig';  // 分发下载页
-					}
 				}
 			},
 			openApp() {
@@ -99,7 +96,7 @@
 				if (type == 'and') {
 					if (this.deviceType == 'android') {
 						// 判断该页面是否为微信内置浏览器内打开 true>显示浏览器内打开引导, 因为微信浏览器不支持下载apk文件
-						// this.isWX();
+						this.isWX();
 						// 如果被拦截下载,点击再次下载包
 						window.open(this.andHref);
 					}
