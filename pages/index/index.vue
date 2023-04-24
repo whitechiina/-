@@ -32,6 +32,9 @@
 			}
 		},
 		onLoad() {
+			// 设备类型
+			this.deviceType = uni.getSystemInfoSync().platform;
+			
 			this.getData()
 			
 			// 动态设置页面标题
@@ -39,9 +42,6 @@
 			
 			// 如果需要通过scheme直接打开app
 			this.openApp()
-			
-			// 设备类型
-			this.deviceType = uni.getSystemInfoSync().platform;
 		},
 		mounted() {
 			// 如果是安卓
@@ -62,9 +62,9 @@
 			async getData () {
 				try {
 					const res = await getIosUrl();
-					this.version = res.data.version;this.version = res.data.version;
-					this.andHref = res.data.ydy_android_link;
-					this.iosHref = res.data.ydy_ios_link;
+					this.version = res.data.version;this.version = res.data.version;  // 版本
+					this.andHref = res.data.ydy_android_link;  // 安卓
+					this.iosHref = 'https://img.agrimedia.cn/bmsc/apps/bmsc_ios.mobileconfig';  // 苹果引导页  （目前这版直接跳转下载页用户手动去下载然后进设置，后续要加一个页面跳转告诉用户如何安装描述文件，不然有的用户不知道泽呢么用）
 				} catch (err) {
 					uni.showToast({
 						title: err,
@@ -77,12 +77,16 @@
 					title: this.appName + '下载'
 				});
 			},
+			// 如果不是在微信环境打开, 判断设备类型,并且设备类型为IOS.直接自动弹出安装提示
 			isWX() {
 				let ua = navigator.userAgent.toLowerCase();
 				if (ua.match(/MicroMessenger/i) == "micromessenger") {
 					this.weixin = true
 				} else {
 					this.weixin = false
+					if (this.deviceType == 'ios') {
+						window.location.href = 'https://img.agrimedia.cn/bmsc/apps/bmsc_ios.mobileconfig';  // 分发下载页
+					}
 				}
 			},
 			openApp() {
@@ -95,16 +99,18 @@
 				if (type == 'and') {
 					if (this.deviceType == 'android') {
 						// 判断该页面是否为微信内置浏览器内打开 true>显示浏览器内打开引导, 因为微信浏览器不支持下载apk文件
-						this.isWX();
+						// this.isWX();
 						// 如果被拦截下载,点击再次下载包
-						if (!this.weixin) {
-							window.open(this.andHref);
-						}
+						window.open(this.andHref);
 					}
 				// 选择ios, 直接打开分发下载页
 				} else {
 					if (this.deviceType == 'ios') {
-						window.location.href = this.iosHref;  // 分发下载页
+						if (this.weixin) {
+							window.location.href = 'http://ydy.baimajingxuan.com:8080/#/';  // 跳出浏览器
+						} else {
+							window.location.href = this.iosHref;  // 分发下载页
+						}
 					}
 				}
 			}
